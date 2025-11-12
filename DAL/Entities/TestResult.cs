@@ -9,6 +9,6 @@ namespace DAL.Entities
         public DateTime Date { get; set; } = DateTime.Now;
 
         public override string ToString()
-            => $"{Date.Day}/{Date.Month}/{Date.Year} | {StudentName} → {TestTitle}: {Percent:F2}%";
+            => $"{Date.Day}/{Date.Month}/{Date.Year} | {StudentName} - {TestTitle}: {Percent:F2}%";
     }
 }

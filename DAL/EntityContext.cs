@@ -9,11 +9,17 @@ namespace DAL
         public IDataProvider<Test> TestsProvider { get; }
         public IDataProvider<TestResult> ResultsProvider { get; }
 
+        public EntityContext(string testsPath, string resultsPath)
+        {
+            TestsProvider = new JsonProvider<Test>(testsPath);
+            ResultsProvider = new JsonProvider<TestResult>(resultsPath);
+        }
+
         public EntityContext()
         {
-            // прості шляхи у корені виконуваного файлу
-            TestsProvider   = new JsonProvider<Test>("../../../Data/tests.json");
-            ResultsProvider = new JsonProvider<TestResult>("../../../Data/results.json");
+            Directory.CreateDirectory("Data");
+            TestsProvider = new JsonProvider<Test>("Data/tests.json");
+            ResultsProvider = new JsonProvider<TestResult>("Data/results.json");
         }
     }
 }

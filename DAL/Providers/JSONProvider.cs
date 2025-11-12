@@ -1,5 +1,4 @@
 using System.Text.Json;
-using DAL.Entities;
 using DAL.Interfaces;
 
 namespace DAL.Providers
@@ -12,9 +11,8 @@ namespace DAL.Providers
         public void Save(List<T> data)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
-            var dir = Path.GetDirectoryName(_file);
+            string? dir = Path.GetDirectoryName(_file);
 
-            // якщо шлях не вказано — нічого не створюємо
             if (!string.IsNullOrEmpty(dir))
                 Directory.CreateDirectory(dir);
 
@@ -24,7 +22,8 @@ namespace DAL.Providers
         public List<T> Load()
         {
             if (!File.Exists(_file)) return new List<T>();
-            var text = File.ReadAllText(_file);
+
+            string text = File.ReadAllText(_file);
             return JsonSerializer.Deserialize<List<T>>(text) ?? new List<T>();
         }
     }

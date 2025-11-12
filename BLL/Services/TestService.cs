@@ -18,142 +18,161 @@ namespace BLL.Services
             _results = _ctx.ResultsProvider.Load();
         }
 
-        // === КЕРУВАННЯ ТЕСТАМИ ===
+        public TestService(EntityContext context)
+        {
+            _ctx = context;
+            _tests = _ctx.TestsProvider.Load();
+            _results = _ctx.ResultsProvider.Load();
+        }
+
+
         public void AddTest(Test test)
         {
             if (string.IsNullOrWhiteSpace(test.Title))
                 throw new TestExceptions("Назва тесту не може бути порожньою.");
-            if (_tests.Any(t => t.Title.Equals(test.Title, StringComparison.OrdinalIgnoreCase)))
+
+            if (_tests.Any(test => test.Title.Equals(test.Title, StringComparison.OrdinalIgnoreCase)))
                 throw new TestExceptions("Такий тест вже існує.");
+
             _tests.Add(test);
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void EditTestTitle(string oldTitle, string newTitle)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == oldTitle)
+            Test test = _tests.FirstOrDefault(x => x.Title == oldTitle)
                 ?? throw new TestExceptions("Тест не знайдено.");
-            t.Title = newTitle;
+
+            test.Title = newTitle;
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void ChangeQuestionsCount(string title, int newCount)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == title)
+            Test test = _tests.FirstOrDefault(x => x.Title == title)
                 ?? throw new TestExceptions("Тест не знайдено.");
+
             if (newCount < 1) throw new TestExceptions("Має бути хоча б 1 питання.");
-            if (newCount < t.Questions.Count)
-                t.Questions.RemoveRange(newCount, t.Questions.Count - newCount);
+
+            if (newCount < test.Questions.Count)
+                test.Questions.RemoveRange(newCount, test.Questions.Count - newCount);
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void UpdateTimePerQuestion(string title, int seconds)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == title)
+            Test test = _tests.FirstOrDefault(x => x.Title == title)
                 ?? throw new TestExceptions("Тест не знайдено.");
             if (seconds < 5)
                 throw new TestExceptions("Час на питання має бути ≥ 5 сек.");
-            t.TimePerQuestionSeconds = seconds;
+            test.TimePerQuestionSeconds = seconds;
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void DeleteTest(string title)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == title)
+            Test test = _tests.FirstOrDefault(x => x.Title == title)
                 ?? throw new TestExceptions("Тест не знайдено.");
-            _tests.Remove(t);
+            _tests.Remove(test);
             _ctx.TestsProvider.Save(_tests);
         }
 
         public List<Test> GetAll() => _tests;
         public List<Test> Search(string keyword)
-            => _tests.Where(t => t.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)).ToList();
+            => _tests.Where(test => test.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        // === КЕРУВАННЯ ПИТАННЯМИ ===
         public void AddQuestion(string testTitle, Question question)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == testTitle)
+            Test test = _tests.FirstOrDefault(x => x.Title == testTitle)
                 ?? throw new TestExceptions("Тест не знайдено.");
 
-            // --- пункт 2.5.1 ---
+            if (question.Answers != null)
+            {
+                question.Answers = question.Answers
+                    .Where(ans => !string.IsNullOrWhiteSpace(ans.Text))
+                    .ToList();
+            }
+
             if (question.Answers == null || question.Answers.Count == 0)
             {
                 question.Answers = new List<Answer>
-                {
-                    new Answer("Варіант 1", false),
-                    new Answer("Варіант 2", false),
-                    new Answer("Правильна відповідь", true)
-                };
+        {
+            new Answer("Відповідь 1", false),
+            new Answer("Відповідь 2", false),
+            new Answer("Правильна відповідь", true)
+        };
             }
             else if (!question.Answers.Any(a => a.IsCorrect))
             {
                 question.Answers[0].IsCorrect = true;
             }
-            // --------------------
 
-            t.Questions.Add(question);
+            test.Questions.Add(question);
             _ctx.TestsProvider.Save(_tests);
         }
 
+
+
         public void DeleteQuestion(string testTitle, int index)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == testTitle)
+            Test test = _tests.FirstOrDefault(test => test.Title == testTitle)
                 ?? throw new TestExceptions("Тест не знайдено.");
-            if (index < 0 || index >= t.Questions.Count)
+
+            if (index < 0 || index >= test.Questions.Count)
                 throw new TestExceptions("Невірний номер питання.");
-            t.Questions.RemoveAt(index);
+
+            test.Questions.RemoveAt(index);
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void EditQuestion(string testTitle, int index, string newText)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == testTitle)
+            Test test = _tests.FirstOrDefault(x => x.Title == testTitle)
                 ?? throw new TestExceptions("Тест не знайдено.");
-            t.Questions[index].Text = newText;
+            test.Questions[index].Text = newText;
             _ctx.TestsProvider.Save(_tests);
         }
 
         public List<Question> GetQuestions(string testTitle)
         {
-            var t = _tests.FirstOrDefault(x => x.Title == testTitle)
+            Test test = _tests.FirstOrDefault(x => x.Title == testTitle)
                 ?? throw new TestExceptions("Тест не знайдено.");
-            return t.Questions;
+            return test.Questions;
         }
 
-        // === КЕРУВАННЯ ВІДПОВІДЯМИ ===
         public void AddAnswer(string testTitle, int qIndex, string text, bool isCorrect)
         {
-            var t = _tests.First(x => x.Title == testTitle);
-            t.Questions[qIndex].Answers.Add(new Answer(text, isCorrect));
+            Test test = _tests.First(x => x.Title == testTitle);
+            test.Questions[qIndex].Answers.Add(new Answer(text, isCorrect));
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void DeleteAnswer(string testTitle, int qIndex, int aIndex)
         {
-            var t = _tests.First(x => x.Title == testTitle);
-            t.Questions[qIndex].Answers.RemoveAt(aIndex);
+            Test test = _tests.First(x => x.Title == testTitle);
+            test.Questions[qIndex].Answers.RemoveAt(aIndex);
             _ctx.TestsProvider.Save(_tests);
         }
 
         public void EditAnswer(string testTitle, int qIndex, int aIndex, string newText, bool isCorrect)
         {
-            var a = _tests.First(x => x.Title == testTitle).Questions[qIndex].Answers[aIndex];
-            a.Text = newText;
-            a.IsCorrect = isCorrect;
+            Answer ans = _tests.First(x => x.Title == testTitle).Questions[qIndex].Answers[aIndex];
+            ans.Text = newText;
+            ans.IsCorrect = isCorrect;
             _ctx.TestsProvider.Save(_tests);
         }
 
         public List<Answer> GetAnswers(string testTitle, int qIndex)
         {
-            var t = _tests.First(x => x.Title == testTitle);
-            return t.Questions[qIndex].Answers;
+            Test test = _tests.First(x => x.Title == testTitle);
+            return test.Questions[qIndex].Answers;
         }
 
-        // === ПРОХОДЖЕННЯ ТЕСТУ ===
         public TestResult RunTestInteractively(string title)
         {
-            var test = _tests.FirstOrDefault(t => t.Title == title)
+            Test test = _tests.FirstOrDefault(t => t.Title == title)
                 ?? throw new TestExceptions("Тест не знайдено.");
+
             if (test.Questions.Count == 0)
                 throw new TestExceptions("У тесті немає питань.");
 
@@ -163,13 +182,13 @@ namespace BLL.Services
             int correct = 0;
             for (int i = 0; i < test.Questions.Count; i++)
             {
-                var q = test.Questions[i];
-                Console.WriteLine($"\nПитання {i + 1}: {q.Text}");
-                for (int j = 0; j < q.Answers.Count; j++)
-                    Console.WriteLine($"{j + 1}. {q.Answers[j].Text}");
+                Question question = test.Questions[i];
+                Console.WriteLine($"\nПитання {i + 1}: {question.Text}");
+                for (int j = 0; j < question.Answers.Count; j++)
+                    Console.WriteLine($"{j + 1}. {question.Answers[j].Text}");
 
                 Console.Write("Ваша відповідь (0 - вихід): ");
-                if (!int.TryParse(Console.ReadLine(), out int ch) || ch < 0 || ch > q.Answers.Count)
+                if (!int.TryParse(Console.ReadLine(), out int ch) || ch < 0 || ch > question.Answers.Count)
                 {
                     Console.WriteLine("Некоректно, пропущено.");
                     continue;
@@ -179,14 +198,18 @@ namespace BLL.Services
                     Console.WriteLine("Тест завершено достроково.");
                     break;
                 }
-                if (q.Answers[ch - 1].IsCorrect) correct++;
+                if (question.Answers[ch - 1].IsCorrect) correct++;
             }
 
             double percent = 100.0 * correct / test.Questions.Count;
-            var result = new TestResult { TestTitle = title, StudentName = name, Percent = percent };
+
+            TestResult result = new TestResult { TestTitle = title, StudentName = name, Percent = percent };
+            
             _results.Add(result);
             _ctx.ResultsProvider.Save(_results);
+
             Console.WriteLine($"\nРезультат: {percent:F2}%");
+
             return result;
         }
 

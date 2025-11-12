@@ -4,10 +4,15 @@ namespace DAL.Entities
     public class Test
     {
         public string Title { get; set; } = string.Empty;
-        public int TimePerQuestionSeconds { get; set; } = 60; // опц. поле з вимог 3.2.2
+        public int TimePerQuestionSeconds { get; set; } = 60;
         public List<Question> Questions { get; set; } = new();
 
         public Test() { }
+
+        public Test(string str)
+        {
+            Title = str;
+        }
         public Test(string title, int timeForQuestion) 
         {
             Title = title;
@@ -15,6 +20,6 @@ namespace DAL.Entities
         }
 
         public override string ToString()
-            => $"Тест: {Title} | Питань: {Questions.Count} | Час/питання: {TimePerQuestionSeconds}s";
+            => $"Тест: {Title} | Питань: {Questions.Count} | Час на питання: {TimePerQuestionSeconds}сек.";
     }
 }
