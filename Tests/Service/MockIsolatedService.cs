@@ -3,7 +3,7 @@ using DAL;
 
 namespace Tests;
 
-public class IsolatedService
+public class MockIsolatedService
 {
     public static TestService CreateIsolatedService()
         {

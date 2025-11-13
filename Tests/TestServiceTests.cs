@@ -16,7 +16,7 @@ public class TestServiceTests
     public void AddTest_Testing()
     {
         TestService service = CreateIsolatedService();
-        Test test = new Test("Math") { TimePerQuestionSeconds = 30 };
+        Test test = new Test("Math", 30);
 
         service.AddTest(test);
 

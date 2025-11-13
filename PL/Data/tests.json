@@ -1,46 +1,88 @@
 [
   {
-    "Title": "Test1",
-    "TimePerQuestionSeconds": 10,
+    "Title": "Основи C#",
+    "TimePerQuestionSeconds": 30,
     "Questions": [
       {
-        "Text": "Question1",
+        "Text": "Що таке інкапсуляція?",
         "Answers": [
-          {
-            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 1",
-            "IsCorrect": false
-          },
-          {
-            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 2",
-            "IsCorrect": false
-          },
-          {
-            "Text": "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C",
-            "IsCorrect": true
-          }
+          { "Text": "Приховування деталей реалізації класу", "IsCorrect": true },
+          { "Text": "Перевантаження методів", "IsCorrect": false },
+          { "Text": "Множинне наслідування", "IsCorrect": false }
+        ]
+      },
+      {
+        "Text": "Який оператор використовується для створення об'єкта?",
+        "Answers": [
+          { "Text": "new", "IsCorrect": true },
+          { "Text": "create", "IsCorrect": false },
+          { "Text": "init", "IsCorrect": false }
         ]
       }
     ]
   },
   {
-    "Title": "Test2",
-    "TimePerQuestionSeconds": 5,
+    "Title": "ООП Основи",
+    "TimePerQuestionSeconds": 20,
     "Questions": [
       {
-        "Text": "Question1",
+        "Text": "Що таке поліморфізм?",
         "Answers": [
-          {
-            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 1",
-            "IsCorrect": false
-          },
-          {
-            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 2",
-            "IsCorrect": false
-          },
-          {
-            "Text": "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C",
-            "IsCorrect": true
-          }
+          { "Text": "Можливість одного інтерфейсу мати різні реалізації", "IsCorrect": true },
+          { "Text": "Здатність класу наслідувати інший", "IsCorrect": false },
+          { "Text": "Створення копій об'єктів", "IsCorrect": false }
+        ]
+      },
+      {
+        "Text": "Що таке композиція?",
+        "Answers": [
+          { "Text": "Стосунок 'частина-ціле', де існування частин залежить від цілого", "IsCorrect": true },
+          { "Text": "Слабкий зв’язок між об'єктами", "IsCorrect": false },
+          { "Text": "Перевантаження операторів", "IsCorrect": false }
+        ]
+      }
+    ]
+  },
+  {
+    "Title": "Історія України",
+    "TimePerQuestionSeconds": 25,
+    "Questions": [
+      {
+        "Text": "У якому році почалася Козаччина?",
+        "Answers": [
+          { "Text": "1492", "IsCorrect": true },
+          { "Text": "1240", "IsCorrect": false },
+          { "Text": "1710", "IsCorrect": false }
+        ]
+      },
+      {
+        "Text": "Хто був гетьманом під час Національно-визвольної війни?",
+        "Answers": [
+          { "Text": "Богдан Хмельницький", "IsCorrect": true },
+          { "Text": "Іван Мазепа", "IsCorrect": false },
+          { "Text": "Петро Конашевич-Сагайдачний", "IsCorrect": false }
+        ]
+      }
+    ]
+  },
+  {
+    "Title": "Математика",
+    "TimePerQuestionSeconds": 35,
+       "Questions": [
+      {
+        "Text": "Скільки буде 5 * 7?",
+        "Answers": [
+          { "Text": "35", "IsCorrect": true },
+          { "Text": "30", "IsCorrect": false },
+          { "Text": "25", "IsCorrect": false }
+        ]
+      },
+      {
+        "Text": "Який корінь з 81?",
+        "Answers": [
+          { "Text": "9", "IsCorrect": true },
+          { "Text": "8", "IsCorrect": false },
+          { "Text": "12", "IsCorrect": false }
         ]
       }
     ]

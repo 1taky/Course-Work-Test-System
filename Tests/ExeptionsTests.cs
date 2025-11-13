@@ -9,7 +9,7 @@ public class ExeptionsTests
     [Fact]
     public void AddTest_EmptyTitle_Testing()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         Test test = new Test("") { TimePerQuestionSeconds = 30 };
 
         Assert.Throws<TestExceptions>(() => service.AddTest(test));
@@ -18,7 +18,7 @@ public class ExeptionsTests
     [Fact]
     public void AddTest_Duplicate_Testing()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         service.AddTest(new Test("OOP"));
 
         Assert.Throws<TestExceptions>(() => service.AddTest(new Test("OOP")));
@@ -27,7 +27,7 @@ public class ExeptionsTests
     [Fact]
     public void DeleteTest_NotFound_Testing()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
 
         Assert.Throws<TestExceptions>(() => service.DeleteTest("Missing"));
     }
@@ -35,7 +35,7 @@ public class ExeptionsTests
     [Fact]
     public void UpdateTimePerQuestion_InvalidValue_Testing()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
 
         service.AddTest(new Test("Error"));
 
@@ -45,14 +45,14 @@ public class ExeptionsTests
     [Fact]
     public void EditTestTitle_ShouldThrow_WhenNotFound()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         Assert.Throws<TestExceptions>(() => service.EditTestTitle("Missing", "New"));
     }
 
     [Fact]
     public void ChangeQuestionsCount_ShouldThrow_WhenLessThanOne()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         service.AddTest(new Test("Invalid"));
         Assert.Throws<TestExceptions>(() => service.ChangeQuestionsCount("Invalid", 0));
     }
@@ -60,14 +60,14 @@ public class ExeptionsTests
     [Fact]
     public void GetQuestions_ShouldThrow_WhenTestNotFound()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         Assert.Throws<TestExceptions>(() => service.GetQuestions("NotExist"));
     }
 
     [Fact]
     public void DeleteQuestion_ShouldThrow_WhenInvalidIndex()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         service.AddTest(new Test("Bad"));
         service.AddQuestion("Bad", new Question("Q1", new List<Answer> { new("A", true) }));
 
@@ -77,14 +77,14 @@ public class ExeptionsTests
     [Fact]
     public void RunTestInteractively_ShouldThrow_WhenTestNotFound()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         Assert.Throws<TestExceptions>(() => service.RunTestInteractively("Nope"));
     }
 
     [Fact]
     public void RunTestInteractively_ShouldThrow_WhenNoQuestions()
     {
-        TestService service = IsolatedService.CreateIsolatedService();
+        TestService service = MockIsolatedService.CreateIsolatedService();
         service.AddTest(new Test("EmptyTest"));
         Assert.Throws<TestExceptions>(() => service.RunTestInteractively("EmptyTest"));
     }
