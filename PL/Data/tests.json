@@ -1,0 +1,48 @@
+[
+  {
+    "Title": "Test1",
+    "TimePerQuestionSeconds": 10,
+    "Questions": [
+      {
+        "Text": "Question1",
+        "Answers": [
+          {
+            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 1",
+            "IsCorrect": false
+          },
+          {
+            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 2",
+            "IsCorrect": false
+          },
+          {
+            "Text": "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C",
+            "IsCorrect": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Title": "Test2",
+    "TimePerQuestionSeconds": 5,
+    "Questions": [
+      {
+        "Text": "Question1",
+        "Answers": [
+          {
+            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 1",
+            "IsCorrect": false
+          },
+          {
+            "Text": "\u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C 2",
+            "IsCorrect": false
+          },
+          {
+            "Text": "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C",
+            "IsCorrect": true
+          }
+        ]
+      }
+    ]
+  }
+]

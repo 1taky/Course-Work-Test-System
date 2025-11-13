@@ -17,9 +17,8 @@ namespace DAL
 
         public EntityContext()
         {
-            Directory.CreateDirectory("Data");
-            TestsProvider = new JsonProvider<Test>("Data/tests.json");
-            ResultsProvider = new JsonProvider<TestResult>("Data/results.json");
+            TestsProvider = new JsonProvider<Test>("../../../Data/tests.json");
+            ResultsProvider = new JsonProvider<TestResult>("../../../Data/results.json");
         }
     }
 }

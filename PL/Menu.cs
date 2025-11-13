@@ -13,17 +13,18 @@ public class Menu
 
         while (true)
         {
-            Console.WriteLine("\n=== СИСТЕМА ТЕСТУВАННЯ ===");
-            Console.WriteLine("1 - Додати тест");
-            Console.WriteLine("2 - Переглянути тести");
-            Console.WriteLine("3 - Видалити тест");
-            Console.WriteLine("4 - Керування питаннями");
-            Console.WriteLine("5 - Керування відповідями");
-            Console.WriteLine("6 - Пройти тест");
-            Console.WriteLine("7 - Пошук тестів");
-            Console.WriteLine("8 - Переглянути результати");
-            Console.WriteLine("9 - Змінити час на одне питання");
-            Console.WriteLine("0 - Вихід");
+            Console.WriteLine("\n   СИСТЕМА ТЕСТУВАННЯ   ");
+            Console.WriteLine("1  - Додати тест");
+            Console.WriteLine("2  - Переглянути тести");
+            Console.WriteLine("3  - Видалити тест");
+            Console.WriteLine("4  - Керування питаннями");
+            Console.WriteLine("5  - Керування відповідями");
+            Console.WriteLine("6  - Пройти тест");
+            Console.WriteLine("7  - Пошук тестів");
+            Console.WriteLine("8  - Переглянути результати");
+            Console.WriteLine("9  - Змінити час на одне питання");
+            Console.WriteLine("10 - Змінити кількість питань у тесті");
+            Console.WriteLine("0  - Вихід");
             Console.Write("Ваш вибір: ");
             string choice = Console.ReadLine() ?? "";
 
@@ -82,6 +83,18 @@ public class Menu
                         Console.WriteLine("*** Час оновлено. ***");
                         break;
 
+                    case "10":
+                        Console.Write("Назва тесту: ");
+                        string tName = Console.ReadLine() ?? "";
+
+                        Console.Write("Нова кількість питань: ");
+                        int newCount = ReadInt("Введіть число (мінімум 1): ", 1);
+
+                        service.ChangeQuestionsCount(tName, newCount);
+                        Console.WriteLine("*** Кількість питань оновлено. ***");
+                        break;
+
+
                     case "0":
                         return;
 
@@ -102,7 +115,7 @@ public class Menu
     {
         Console.Write("Назва тесту: ");
         string title = Console.ReadLine() ?? "";
-        Console.WriteLine("\n=== КЕРУВАННЯ ПИТАННЯМИ ===");
+        Console.WriteLine("\n   КЕРУВАННЯ ПИТАННЯМИ    ");
         Console.WriteLine("1 - Додати питання");
         Console.WriteLine("2 - Видалити питання");
         Console.WriteLine("3 - Редагувати питання");
@@ -179,7 +192,7 @@ public class Menu
             Console.WriteLine($"{i + 1}. {questions[i].Text}");
         int qIndex = ReadInt("Оберіть питання: ", 1, questions.Count) - 1;
 
-        Console.WriteLine("\n=== КЕРУВАННЯ ВІДПОВІДЯМИ ===");
+        Console.WriteLine("\n    КЕРУВАННЯ ВІДПОВІДЯМИ    ");
         Console.WriteLine("1 - Додати відповідь");
         Console.WriteLine("2 - Видалити відповідь");
         Console.WriteLine("3 - Редагувати відповідь");
@@ -212,8 +225,8 @@ public class Menu
             case "3":
                 List<Answer> answers = service.GetAnswers(title, qIndex);
 
-                for (int i = 1; i <= answers.Count; i++)
-                    Console.WriteLine($"{i}. {answers[i]}");
+                for (int i = 0; i < answers.Count; i++)
+                    Console.WriteLine($"{i + 1}. {answers[i]}");
 
                 int edit = ReadInt("Номер відповіді: ", 1, answers.Count) - 1;
                 Console.Write("Новий текст: ");

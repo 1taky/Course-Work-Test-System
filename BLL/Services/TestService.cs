@@ -31,8 +31,9 @@ namespace BLL.Services
             if (string.IsNullOrWhiteSpace(test.Title))
                 throw new TestExceptions("Назва тесту не може бути порожньою.");
 
-            if (_tests.Any(test => test.Title.Equals(test.Title, StringComparison.OrdinalIgnoreCase)))
-                throw new TestExceptions("Такий тест вже існує.");
+            if (_tests.Any(existingTest => existingTest.Title.Equals(test.Title, StringComparison.OrdinalIgnoreCase)))
+                throw new TestExceptions($"Тест с названием '{test.Title}' уже существует.");
+
 
             _tests.Add(test);
             _ctx.TestsProvider.Save(_tests);
